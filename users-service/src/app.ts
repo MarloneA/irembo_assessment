@@ -17,7 +17,7 @@ function createApp() {
     session({
       cookie: {
         maxAge: 60000 * 60,
-        secure: false, 
+        secure: false, //set to true when deploying to prod
         httpOnly: true,
       },
       name: process.env.SESSION_NAME,
@@ -25,7 +25,7 @@ function createApp() {
       resave: true,
       saveUninitialized: true,
       store: new PrismaSessionStore(prisma, {
-        checkPeriod: 2 * 60 * 1000, 
+        checkPeriod: 2 * 60 * 1000, //ms
         dbRecordIdIsSessionId: true,
         dbRecordIdFunction: undefined,
       }),

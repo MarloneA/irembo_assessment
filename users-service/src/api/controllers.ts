@@ -7,7 +7,7 @@ export const register = async (req: Request, res: Response) => {
 
   try {
     const { email, password, role } = req.body;
-    const result = await service.registerUser({ email, password, role });
+    const { data } = await service.registerUser({ email, password, role });
 
     res.status(201).send({
       message: "registration successful proceed to login"
@@ -21,7 +21,10 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = (req: Request, res: Response) => {
-  res.status(200).send("login success");
+  res.status(200).send({
+    isAuthenticated: req.isAuthenticated(),
+    user: req.user,
+  });
 };
 
 
