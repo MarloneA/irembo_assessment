@@ -1,9 +1,7 @@
 import bcrypt from "bcrypt";
 
-const saltRounds = process.env.SALT_ROUNDS;
-
 export const hashPassword = (password: string) => {
-  const salt = bcrypt.genSaltSync(saltRounds);
+  const salt = bcrypt.genSaltSync();
   return bcrypt.hashSync(password, salt);
 };
 

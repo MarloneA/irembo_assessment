@@ -3,6 +3,7 @@ import router from "./api/routes";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
+// import cors from "cors";
 import "./api/middleware/passport/strategy/local-strategy";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { PrismaClient } from "@prisma/client";
@@ -11,6 +12,7 @@ function createApp() {
   const app = express();
   const prisma = new PrismaClient();
 
+  // app.use(cors());
   app.use(express.json());
   app.use(cookieParser());
   app.use(

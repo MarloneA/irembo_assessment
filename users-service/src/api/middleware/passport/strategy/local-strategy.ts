@@ -1,8 +1,8 @@
 // @ts-nocheck
 import passport, { DoneCallback } from "passport";
 import { Strategy } from "passport-local";
-import { comparePassword } from "../../../../lib/utils.ts";
-import UserService from "../../../services.ts";
+import { comparePassword } from "../../../../lib/utils";
+import UserService from "../../../services";
 
 
 const service = new UserService();
