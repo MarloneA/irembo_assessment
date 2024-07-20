@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "passport": "^0.7.0"
+    "passport": "^0.7.0",
+    "prisma": "^5.17.0"
   }
 }
