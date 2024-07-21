@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
 }
 
 datasource db {
@@ -14,10 +15,40 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @unique @default(autoincrement())
-  email    String @unique
+  id       Int       @id @unique @default(autoincrement())
+  email    String    @unique
   password String
   role     String
+  bookings Booking[]
+  Vehicle  Vehicle[]
+}
+
+model Booking {
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  slot        Slot      @relation(fields: [slotId], references: [id])
+  slotId      Int
+  vehicle     Vehicle   @relation(fields: [vehicleId], references: [id])
+  vehicleId   Int
+  confirmed   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  confirmedAt DateTime? @updatedAt
+}
+
+model Slot {
+  id       Int       @id @default(autoincrement())
+  start    DateTime
+  end      DateTime
+  isBooked Boolean   @default(false)
+  bookings Booking[]
+}
+
+model Analytics {
+  id        Int      @id @default(autoincrement())
+  event     String
+  timestamp DateTime @default(now())
+  details   Json
 }
 
 model Session {
@@ -25,4 +56,14 @@ model Session {
   sid       String   @unique
   data      String
   expiresAt DateTime
+}
+
+model Vehicle {
+  id       Int       @id @default(autoincrement())
+  plate    String
+  model    String
+  capacity String
+  Booking  Booking[]
+  User     User?     @relation(fields: [userId], references: [id])
+  userId   Int?
 }

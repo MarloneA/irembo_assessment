@@ -5,7 +5,7 @@ import { AUTH_ROLE_ADMIN, AUTH_ROLE_DRIVER, AUTH_ROLE_EMPLOYEE } from '../lib/co
 
 const router = Router();
 
-router.post('/book', bookSlot);
+router.post('/create', bookSlot);
 router.post('/confirm', checkRole(AUTH_ROLE_DRIVER), confirmBooking);
 router.post('/cancel', checkRole(AUTH_ROLE_EMPLOYEE), cancelBooking);
 router.post('/override', checkRole(AUTH_ROLE_ADMIN), overrideBooking);

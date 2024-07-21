@@ -39,7 +39,7 @@ function createApp() {
   });
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use("/api", router);
+  app.use(router);
 
   return app;
 }
