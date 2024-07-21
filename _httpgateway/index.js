@@ -1,16 +1,27 @@
 const express = require("express");
 const cors = require("cors");
 const proxy = require("express-http-proxy");
+require("dotenv").config();
 
 const app = express();
+const PORT = process.env.PORT_PROXY;
 
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/dashboard", proxy("http://localhost:8083"));
-app.use("/api/bookings", proxy("http://localhost:8082"));
-app.use("/api/auth", proxy("http://localhost:8081"));
+app.use(
+  "/api/dashboard",
+  proxy(`${process.env.APP_URL}:${process.env.PORT_ANALYTICS_SERVICE}`)
+);
+app.use(
+  "/api/bookings",
+  proxy(`${process.env.APP_URL}:${process.env.PORT_BOOKINGS_SERVICE}`)
+);
+app.use(
+  "/api/auth",
+  proxy(`${process.env.APP_URL}:${process.env.PORT_USERS_SERVICE}`)
+);
 
-app.listen(8000, () => {
-  console.log("Gateway is Listening to Port 8000");
+app.listen(PORT, () => {
+  console.log(`Gateway is Listening to Port ${PORT}`);
 });
