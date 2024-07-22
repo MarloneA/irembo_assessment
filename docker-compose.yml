@@ -4,7 +4,7 @@ services:
     restart: always
     user: postgres
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-postgresql:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=changemeinprodpass
       - POSTGRES_USER=postgres
@@ -82,11 +82,13 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./proxy
+    volumes:
+      - ./templates:/etc/nginx/templates
     depends_on:
       - analytics-service
       - bookings-service
       - users-service
     ports:
-      - 80:80
+      - 8080:80
 volumes:
-  db-data:
+  db-postgresql:
