@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const controllers_1 = require("./controllers");
+const auth_1 = require("./middleware/auth");
+const constants_1 = require("../lib/constants");
+const router = (0, express_1.Router)();
+router.post('/create', controllers_1.bookSlot);
+router.post('/confirm', (0, auth_1.checkRole)(constants_1.AUTH_ROLE_DRIVER), controllers_1.confirmBooking);
+router.post('/cancel', (0, auth_1.checkRole)(constants_1.AUTH_ROLE_EMPLOYEE), controllers_1.cancelBooking);
+router.post('/override', (0, auth_1.checkRole)(constants_1.AUTH_ROLE_ADMIN), controllers_1.overrideBooking);
+exports.default = router;

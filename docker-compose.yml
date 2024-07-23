@@ -1,0 +1,94 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    user: postgres
+    volumes:
+      - db-postgresql:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=changemeinprodpass
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=dckrbooking
+    expose:
+      - 5432
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  analytics-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./analytics-service
+    container_name: analytics-service
+    ports:
+      - "8083:8083"
+    restart: always
+    depends_on:
+      - "db"
+      - "rabbitmq"
+    volumes:
+      - .:/app
+      - /app/analytics-service/node_modules
+
+    env_file:
+      - ./analytics-service/.env
+
+  bookings-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./bookings-service
+    container_name: bookings-service
+    ports:
+      - "8082:8082"
+    restart: always
+    depends_on:
+      - "db"
+      - "rabbitmq"
+    volumes:
+      - .:/app
+      - /app/bookings-service/node_modules
+
+    env_file:
+      - ./bookings-service/.env
+
+  users-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./users-service
+    container_name: users-service
+    ports:
+      - "8081:8081"
+    restart: always
+    depends_on:
+      - "db"
+      - "rabbitmq"
+    volumes:
+      - .:/app
+      - /app/users-service/node_modules
+
+    env_file:
+      - ./users-service/.env
+
+  nginx-proxy:
+    build:
+      dockerfile: Dockerfile
+      context: ./proxy
+    volumes:
+      - ./templates:/etc/nginx/templates
+    depends_on:
+      - analytics-service
+      - bookings-service
+      - users-service
+    ports:
+      - 8080:80
+volumes:
+  db-postgresql:
