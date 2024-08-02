@@ -1,4 +1,4 @@
-# Transport Booking System
+# Microservices with Typescript, RabbitMq and Docker
 
 This project is built with typescript, node js, express and consists of three microservices: User Service, Booking Service, and Analytics Service. These services are managed and proxied via Nginx, and utilize RabbitMQ for pubsub messaging, and PostgreSQL for the database.
 
