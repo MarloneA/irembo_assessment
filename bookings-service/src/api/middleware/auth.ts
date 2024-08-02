@@ -11,7 +11,6 @@ export const authoriseUser = (request: Request, response: Response, next: NextFu
 };
 
 export const checkRole = (role: string) => (req: Request, res: Response, next: NextFunction) => {
-  console.log('req: ', req.user);
   if (req?.user?.role !== role) {
     return res.status(401).send({ message: "You do not have sufficient permissions to perfom this action" })
   };

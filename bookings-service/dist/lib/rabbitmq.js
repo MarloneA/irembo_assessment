@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getChannel = exports.connectRabbitMQ = void 0;
 const amqplib_1 = __importDefault(require("amqplib"));
-const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://localhost';
+const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://rabbitmq:5672';
 let channel;
 const connectRabbitMQ = () => __awaiter(void 0, void 0, void 0, function* () {
     try {

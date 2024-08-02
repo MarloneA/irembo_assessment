@@ -1,7 +1,6 @@
 // src/controllers/AnalyticsController.ts
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import { getChannel } from '../lib/rabbitmq';
 
 
 const prisma = new PrismaClient();

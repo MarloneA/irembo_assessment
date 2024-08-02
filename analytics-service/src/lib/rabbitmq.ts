@@ -1,7 +1,7 @@
 import amqp from 'amqplib';
 import { handleEvent } from './events';
 
-const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://localhost';
+const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://rabbitmq:5672';
 
 let channel: amqp.Channel;
 
